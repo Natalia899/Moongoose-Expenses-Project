@@ -4,19 +4,40 @@ const router = express.Router()
 const Expenses = require('../models/Expenses')
 const moment = require('moment')
 
-// router.get('/expenses', function(req, res){
-//     Expenses.find({}, function(err, result){
+
+router.get('/expenses', function (req, res) {
+    let d1 = req.query
+    let d2 = req.query
+    console.log(d1)
+    d1 = moment(d1.d1).format('L')
+    d2 = moment(d1.d2).format('L')
+    let currentDate = moment().format('L')
+    console.log(d1);
+    if (d1 && d2) {
+        Expenses.find({
+            
+            $and: [{ data: { "$gte": d1 } }, { date: { "$lte": d2 } }]
+        }, function (err, result) {
+            res.send(result)
+        })
+    } else if (d1) {
+        Expenses.find({
+            $and: [{ date: { "$gte": d1 } }, { date: { "$lte": currentDate } }]
+        })
+    }
+})
+// Expenses.find({}, function(err, result){
+//     res.send(result)
+// })
+
+
+// router.get('/expenses', function (req, res) {
+//     Expenses.find({}).sort({
+//         data: -1
+//     }).exec(function (err, result) {
 //         res.send(result)
 //     })
 // })
-
-router.get('/expenses', function (req, res) {
-    Expenses.find({}).sort({
-        data: -1
-    }).exec(function (err, result) {
-        res.send(result)
-    })
-})
 
 router.post('/expense', function (req, res) {
     let expense = req.body
@@ -49,23 +70,12 @@ router.get('/expenses/:group/:total', function (req, res) {
     ]).exec(function (err, result) {
         res.send(result)
     }) : Expenses.find({ group: groupName }, function (error, response) {
-        res.send(response) 
+        res.send(response)
     })
 })
 
-    // if (total){
-    //     Expenses.aggregate([
-    //         { $group: 
-    //            { _id: {$match: groupName}, 
-    //            totalSpent: { $sum: "$amount" } } }
-    //       ]).exec(function(err, result){
-    //           console.log(result);
-    //           res.send(result) }) 
-    // }
-
-    //        })
 
 
 
 
-    module.exports = router
+module.exports = router

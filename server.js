@@ -4,11 +4,13 @@ const api = require('./server/routes/api')
 const mongoose = require('mongoose')
 mongoose.connect('mongodb://localhost/expensesDB', { useNewUrlParser: true })
 const bodyParser = require('body-parser')
+const materialize = require('materialize-css@next')
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use('/', api)
+app.use(express.static(path.join(__dirname, 'dist')))
 
 
 
