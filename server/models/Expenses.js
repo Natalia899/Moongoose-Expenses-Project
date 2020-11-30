@@ -12,7 +12,7 @@ const expensesSchema = new Schema({
 
 const Expenses = mongoose.model("Expenses", expensesSchema)
 const data = require('./expenses.json')
-data.forEach(e => new Expenses(e).save())
+//data.forEach(e => new Expenses(e).save())
 
 
 module.exports = Expenses

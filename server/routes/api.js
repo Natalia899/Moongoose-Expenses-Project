@@ -4,52 +4,46 @@ const router = express.Router()
 const Expenses = require('../models/Expenses')
 const moment = require('moment')
 
-
-router.get('/expenses', function (req, res) {
-    let d1 = req.query
-    let d2 = req.query
-    console.log(d1)
-    d1 = moment(d1.d1).format('L')
-    d2 = moment(d1.d2).format('L')
-    let currentDate = moment().format('L')
-    console.log(d1);
-    if (d1 && d2) {
-        Expenses.find({
-            
-            $and: [{ data: { "$gte": d1 } }, { date: { "$lte": d2 } }]
-        }, function (err, result) {
-            res.send(result)
-        })
-    } else if (d1) {
-        Expenses.find({
-            $and: [{ date: { "$gte": d1 } }, { date: { "$lte": currentDate } }]
-        })
+router.get("/expenses", (req, res) => {    
+    const { d1, d2 } = req.query;
+    if (d1 && d2) {        
+        Expenses.find({            
+            date: { "$gte": moment(d1).toDate(),
+                    "$lte": moment(d2).toDate()
+         }}).then(expense => res.send(expense))
+        } else if (d1 && !d2) {        
+            Expenses.find({ date: { "$gte": moment(d1).toDate()
+        }}).then(expense => res.send(expense));    
+    } else {        
+        Expenses.find({}).sort("-date").then(expense => res.send(expense))
     }
+}
+)
+
+router.get('/all_expenses', function (req, res) {
+    Expenses.find({}).exec(function (err, result) {
+        res.send(result)
+    })
 })
-// Expenses.find({}, function(err, result){
-//     res.send(result)
-// })
-
-
-// router.get('/expenses', function (req, res) {
-//     Expenses.find({}).sort({
-//         data: -1
-//     }).exec(function (err, result) {
-//         res.send(result)
-//     })
-// })
 
 router.post('/expense', function (req, res) {
     let expense = req.body
     let date = expense.date ? moment(new Date(expense.date)).format('LLLL') : moment().format('LLLL')
     let newExpense = new Expenses({ item: expense.name, amount: expense.amount, group: expense.group, date })
-    newExpense.save().then(result => { console.log(`You spent ${result.amount} for ${result.item}`); })
-    res.send(newExpense)
+    newExpense.save().then(result => {
+         console.log(`You spent ${result.amount} for ${result.item}`);
+         const db = Expenses.find({}).then(dbExpenses =>{ 
+            console.log('------------------');
+            console.log(dbExpenses);
+            console.log('------------------');
+            res.send(dbExpenses)
+            })        
+    })
 })
 
-router.put('/update', function (req, res) {
-    let group1 = "rent"
-    let group2 = "food"
+router.put('/update/:group1/:group2', function (req, res) {
+    let group1 = req.params.group1
+    let group2 = req.params.group2
     Expenses.findOneAndUpdate({ group: group1 }, { group: group2 }, { new: true }, function (err, updatedGroup) {
         res.send(`the ${updatedGroup.item}s group was changed to ${updatedGroup.group}`)
     })
@@ -73,9 +67,5 @@ router.get('/expenses/:group/:total', function (req, res) {
         res.send(response)
     })
 })
-
-
-
-
 
 module.exports = router

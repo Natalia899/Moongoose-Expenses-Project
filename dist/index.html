@@ -1,17 +1,58 @@
 <!DOCTYPE html>
   <html>
     <head>
-      <!--Import Google Icon Font-->
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-      <!--Import materialize.css-->
-      <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-      <!--Let browser know website is optimized for mobile-->
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+      <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Expenses</title>
+    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
     </head>
     <body>
+      <button id="get"> Search</button>
+      <input id='name' placeholder="name">
+      <input id='amount' placeholder="amount">
+      <input id='date' type='date' placeholder="date">
+      <input id='group' placeholder="group">
+      <button id="add"> Add</button>
 
-        <a class="waves-effect waves-light btn">button</a>
-      <!--JavaScript at end of body for optimized loading-->
-      <script type="text/javascript" src="js/materialize.min.js"></script>
+      <script id="expenses-template" type="text/x-handlebars-template">
+        {{#each data}} 
+        <div class='expense'> 
+          <p>{{amount}}</p>
+          <p>{{item}}</p>
+          <p>{{date}}</p>
+        </div>
+      {{/each}}
+          
+    </script>
+
+    <script id="newExpense-template" type="text/x-handlebars-template">
+      <div class='newExpense'> 
+        <p>{{newExpense.amount}}</p>
+        <p>{{newExpense.item}}</p>
+        <p>{{newExpense.date}}</p>
+          <p>{{newExpense.group}}
+        </p>
+      </div>
+        
+  </script>
+
+    <div class='expenses-container'></div>
+    <div class='newExpense-container'></div>
+
+<div>are u here?</div>
+
+
+
+
+
+
+
+
+  
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
+        <script src="./jquery/dist/jquery.js"></script>
+        <script src='ExpenseManager.js'></script>
+        <script src='Renderer.js'></script>
+        <script src='main.js'></script>
     </body>
   </html>
