@@ -1,0 +1,1 @@
+const materialize = require('materialize-css')
