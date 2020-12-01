@@ -16,15 +16,19 @@ class ExpenseManager {
     getExpensesByDates() {
         let date1 = $('#d1').val()
         let date2 = $('#d2').val()
-        console.log(date1);
-        console.log(date2);
         return $.get(`/expenses?d1=${date1}&d2=${date2}`, (data) =>  data)
     }
 
     getExpensesByGroup(){
         let group = $('#groupValidator').val()
-        let total = $('#totalValidator').val()
-        return $.get(`/expenses/${group}?total=${total}`, (data) => data)
+        console.log(group);
+        return $.get(`/expenses/${group}`, (data) => data)
+    }
+
+    getTotal(){
+        let group = $('#groupValidator').val()
+        let total = true
+        return $.get(`/expenses/${group}?total=${total}`, (data) => data)  
     }
 }
 

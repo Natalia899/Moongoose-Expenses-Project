@@ -6,13 +6,12 @@ color: rgb(0, 53, 84);
 
 .main-constructor {
     display: grid;
-    grid-template-areas: aaa
-                         bbb;
+    
 }
 
 .expenses-container {
-    grid-area: a;
-   
+   display:grid;
+   justify-content: center;
 }
 
 
@@ -22,3 +21,27 @@ color: rgb(0, 53, 84);
     justify-content: center;
 }
 
+.expense{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-areas: "i a g d";
+    width: 50%;
+    border: solid rgb(141, 169, 196) 2px;
+    border-radius: 5px;
+    font-weight: bold;
+    color: rgb(1, 22, 39);
+  
+}
+.item{
+    grid-area: i;
+}
+
+.amount{
+    grid-area: a;
+}
+.group{
+    grid-area: g;
+}
+.date{
+    grid-area: d
+}
