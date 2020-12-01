@@ -1,0 +1,24 @@
+body {
+background-color: rgb(234, 244, 244);
+font-family: 'Raleway', sans-serif;
+color: rgb(0, 53, 84);
+}
+
+.main-constructor {
+    display: grid;
+    grid-template-areas: aaa
+                         bbb;
+}
+
+.expenses-container {
+    grid-area: a;
+   
+}
+
+
+#form {
+    
+    display: grid;
+    justify-content: center;
+}
+

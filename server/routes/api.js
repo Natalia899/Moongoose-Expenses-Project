@@ -6,11 +6,14 @@ const moment = require('moment')
 
 router.get("/expenses", (req, res) => {    
     const { d1, d2 } = req.query;
-    if (d1 && d2) {        
+    if (d1 && d2) {  
+        console.log(d1);      
         Expenses.find({            
             date: { "$gte": moment(d1).toDate(),
                     "$lte": moment(d2).toDate()
-         }}).then(expense => res.send(expense))
+         }}).then(expense => {
+            console.log(expense); 
+            res.send(expense)})
         } else if (d1 && !d2) {        
             Expenses.find({ date: { "$gte": moment(d1).toDate()
         }}).then(expense => res.send(expense));    
@@ -33,9 +36,6 @@ router.post('/expense', function (req, res) {
     newExpense.save().then(result => {
          console.log(`You spent ${result.amount} for ${result.item}`);
          const db = Expenses.find({}).then(dbExpenses =>{ 
-            console.log('------------------');
-            console.log(dbExpenses);
-            console.log('------------------');
             res.send(dbExpenses)
             })        
     })
@@ -49,9 +49,9 @@ router.put('/update/:group1/:group2', function (req, res) {
     })
 })
 
-router.get('/expenses/:group/:total', function (req, res) {
+router.get('/expenses/:group/', function (req, res) {
     let groupName = req.params.group
-    let total = req.params.total
+    let total = req.query
 
     total ? Expenses.aggregate([
         { $match: { group: groupName } },

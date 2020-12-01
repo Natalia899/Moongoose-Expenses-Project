@@ -1,58 +1,86 @@
 <!DOCTYPE html>
-  <html>
-    <head>
-      <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Expenses</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
-    </head>
-    <body>
-      <button id="get"> Search</button>
-      <input id='name' placeholder="name">
-      <input id='amount' placeholder="amount">
-      <input id='date' type='date' placeholder="date">
-      <input id='group' placeholder="group">
-      <button id="add"> Add</button>
+<html>
 
-      <script id="expenses-template" type="text/x-handlebars-template">
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Expenses</title>
+  <link rel="stylesheet" type="text/css" media="screen" href="style.css" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+ 
+
+  <script id="expenses-template" type="text/x-handlebars-template">
+    
         {{#each data}} 
         <div class='expense'> 
-          <p>{{amount}}</p>
-          <p>{{item}}</p>
-          <p>{{date}}</p>
+          <span class='item'>{{item}}</span>
+          <span class='amount'>{{amount}}</span>
+          <span class='group'>{{group}}</span>
+          <span class='date'>{{date}}</span>
         </div>
       {{/each}}
           
     </script>
 
-    <script id="newExpense-template" type="text/x-handlebars-template">
-      <div class='newExpense'> 
-        <p>{{newExpense.amount}}</p>
-        <p>{{newExpense.item}}</p>
-        <p>{{newExpense.date}}</p>
-          <p>{{newExpense.group}}
-        </p>
-      </div>
-        
-  </script>
-
-    <div class='expenses-container'></div>
-    <div class='newExpense-container'></div>
-
-<div>are u here?</div>
-
-
-
-
-
-
-
-
   
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
-        <script src="./jquery/dist/jquery.js"></script>
-        <script src='ExpenseManager.js'></script>
-        <script src='Renderer.js'></script>
-        <script src='main.js'></script>
-    </body>
-  </html>
+  <div class='main-container'>
+    <form id='form'>
+      <h3 id='formHeader'>Add new expense</h3>
+      <input id='name' placeholder="name"> <br>
+      <input id='amount' placeholder="amount"> <br>
+      <input id='date' type='date' placeholder="date"> <br>
+      <label for="groups">Choose a category: </label><br>
+      <select id="group" name="groups">
+        <option value="food">Food</option>
+        <option value="bills">Bills</option>
+        <option value="rent">Rent</option>
+        <option  value="fun">Fun</option>
+      </select><br>
+      <button id="add"> Add</button>
+    </form>
+    <button id="get">Show all expenses</button><br>
+    <div id='validator1'>
+    <input id='d1' type='date' placeholder="date"> 
+    <input id='d2' type='date' placeholder="date"> <br>
+    <button id="getByDate">ok</button><br>
+   </div>
+    <div class='expenses-container'>
+      
+    </div>
+    
+  </div>
+
+
+
+
+
+
+
+
+
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.4/handlebars.js"></script>
+  <script src="./jquery/dist/jquery.js"></script>
+  <script src='ExpenseManager.js'></script>
+  <script src='Renderer.js'></script>
+  <script src='main.js'></script>
+</body>
+
+</html>
+
+
+<script id="newExpense-template" type="text/x-handlebars-template">
+  <div class='newExpense'> 
+    <p>{{newExpense.amount}}</p>
+    <p>{{newExpense.item}}</p>
+    <p>{{newExpense.date}}</p>
+      <p>{{newExpense.group}}
+    </p>
+  </div>
+    
+</script>
