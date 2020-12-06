@@ -55,7 +55,7 @@ router.put('/update/:group1/:group2', function (req, res) {
 router.get('/expenses/:group/', function (req, res) {
     let groupName = req.params.group
     let total = req.query
-    console.log('are you here?');
+
     total ? Expenses.aggregate([
         { $match: { group: groupName } },
         {
@@ -65,8 +65,6 @@ router.get('/expenses/:group/', function (req, res) {
             }
         }
     ]).then(result => res.send(result))
-        // .exec(function (err, result) {
-        //     res.send(result)})
         : Expenses.find({ group: groupName }).then(response => {
             console.log(response);
             res.send(response)
